@@ -9,12 +9,14 @@
 #import "FJTSlideMainViewController.h"
 #import "FJTDetailViewController.h"
 #import "FJTMenuViewController.h"
+#import "FJTItem.h"
 
 static NSInteger const sliderBarWith = 80;
 @interface FJTSlideMainViewController ()<UIScrollViewDelegate>
 @property (nonatomic,strong)UIScrollView *scrollView;
 @property (nonatomic,strong)FJTMenuViewController *menuViewController;
 @property (nonatomic,strong)FJTDetailViewController *detailViewController;
+@property (nonatomic,assign)BOOL isShowMenuBar;
 @end
 
 @implementation FJTSlideMainViewController
@@ -63,6 +65,17 @@ static NSInteger const sliderBarWith = 80;
     menuNavigationController.navigationBar.clipsToBounds = YES;
     detailNavigationController.navigationBar.clipsToBounds = YES;
     
+    __weak FJTSlideMainViewController *menuViewCtrSelf = self;
+    _menuViewController.menuClick = ^(FJTItem *item,BOOL isHideSliderBar){
+        menuViewCtrSelf.detailViewController.item = item;
+        [menuViewCtrSelf showHideMenu:isHideSliderBar animated:YES];
+    };
+    
+    __weak FJTSlideMainViewController *detailViewCtrSelf = self;
+    _detailViewController.leftBarButtonClick = ^(){
+        [detailViewCtrSelf showHideMenu:!detailViewCtrSelf.isShowMenuBar animated:YES];
+    };
+    
     self.menuViewController.view.layer.anchorPoint = CGPointMake(1, 0.5);
 }
 
@@ -74,19 +87,15 @@ static NSInteger const sliderBarWith = 80;
     _detailViewController.parentViewController.view.frame = CGRectMake(sliderBarWith, 0, CGRectGetWidth(_scrollView.bounds), CGRectGetHeight(_scrollView.frame));
     [self.scrollView addSubview:_detailViewController.parentViewController.view];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+-(void)showHideMenu:(BOOL)showOrHide animated:(BOOL)animated
+{
+    [_scrollView setContentOffset:showOrHide ? CGPointZero:CGPointMake(sliderBarWith, 0) animated:animated];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    self.isShowMenuBar = scrollView.contentOffset.x < sliderBarWith;
 }
-*/
 
 @end

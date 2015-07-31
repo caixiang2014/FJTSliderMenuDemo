@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class FJTItem;
 @interface FJTMenuViewController : UITableViewController
-
+@property (nonatomic,copy) void(^menuClick)(FJTItem *item,BOOL isShowSlider);
 @end

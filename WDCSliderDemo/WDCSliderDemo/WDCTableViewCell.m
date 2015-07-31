@@ -20,6 +20,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _menuIcon = [[UIImageView alloc] init];
+        NSLog(@"self.bounds.width = %f,self.bounds.height=%f",self.bounds.size.width,self.bounds.size.height);
         [self addSubview:_menuIcon];
     }
     return self;
@@ -32,6 +33,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    NSLog(@"self.bounds.width = %f,self.bounds.height=%f",self.bounds.size.width,self.bounds.size.height);
     self.menuIcon.frame = self.bounds;
 }
 

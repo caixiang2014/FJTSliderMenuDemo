@@ -9,6 +9,8 @@
 #import "FJTMenuViewController.h"
 #import "WDCTableViewCell.h"
 #import "FJTItem.h"
+#import "FJTDetailViewController.h"
+
 @interface FJTMenuViewController ()
 @property (nonatomic,strong)NSMutableArray *items;
 @end
@@ -30,6 +32,8 @@ static NSString *const identifier = @"Cell";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.bounces = NO;
+    
+    self.menuClick(_items[0],NO);
 }
 
 #pragma mark  -- UITableViewControllerDataSource
@@ -53,5 +57,13 @@ static NSString *const identifier = @"Cell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return MAX(80, CGRectGetWidth(self.view.frame)/_items.count);
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.menuClick) {
+        self.menuClick(_items[indexPath.row],NO);
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 @end

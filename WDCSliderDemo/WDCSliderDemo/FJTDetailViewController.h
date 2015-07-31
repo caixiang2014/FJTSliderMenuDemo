@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class FJTItem;
 @interface FJTDetailViewController : UIViewController
-
+@property (nonatomic,strong)FJTItem *item;
+@property (nonatomic,copy) void(^leftBarButtonClick)();
 @end
