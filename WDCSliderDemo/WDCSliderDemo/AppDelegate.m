@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "FJTSlideMainViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    FJTSlideMainViewController *viewController = [[FJTSlideMainViewController alloc] init];
+
+    self.window.rootViewController = viewController;
+    [_window makeKeyAndVisible];
     return YES;
 }
 
