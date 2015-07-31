@@ -52,8 +52,6 @@
 -(void)setItem:(FJTItem *)item
 {
     _item = item;
-    _bigImage = [[UIImageView alloc] init];
-    [self.view addSubview:_bigImage];
     _bigImage.image = [UIImage imageNamed:item.bigIcon];
     CGFloat r = [item.colors[0] doubleValue] / 255.0;
     CGFloat g = [item.colors[1] doubleValue] / 255.0;
